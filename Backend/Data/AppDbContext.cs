@@ -7,6 +7,7 @@ public class AppDbContext : DbContext
 {
   public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
   public DbSet<User> Users { get; set; }
+  public DbSet<RefreshToken> RefreshTokens { get; set; }
   public DbSet<Address> Addresses { get; set; }
   public DbSet<Category> Categories { get; set; }
   public DbSet<Product> Products { get; set; }
@@ -22,6 +23,13 @@ public class AppDbContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
+
+    // RefreshToken - User relationship
+    modelBuilder.Entity<RefreshToken>()
+      .HasOne(rt => rt.User)
+      .WithMany(u => u.RefreshTokens)
+      .HasForeignKey(rt => rt.UserId)
+      .OnDelete(DeleteBehavior.Cascade);
 
     // composite key product stock
     modelBuilder.Entity<ProductStock>()

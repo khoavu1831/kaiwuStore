@@ -13,4 +13,5 @@ public class User
   public ICollection<Address> Addresses { get; set; } = new List<Address>();
   public ICollection<Cart> Carts { get; set; } = new List<Cart>();
   public ICollection<Order> Orders { get; set; } = new List<Order>();
+  public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 }
